@@ -16,12 +16,34 @@ const INTEGRATIONS = [
   { id: 'figma', label: 'Figma', icon: Figma, ring: 3, initialAngle: Math.PI / 2 + Math.PI },
 ];
 
-// Ring configurations
+// Ring configurations with responsive radii
 // Speed calculated as: 2π / duration (in radians per second)
+// Radii: mobile / sm / md / lg
 const RING_CONFIG = {
-  1: { radius: 80, radiusMd: 130, speed: (2 * Math.PI) / 25, direction: 1 }, // CW, 25s for full rotation
-  2: { radius: 125, radiusMd: 190, speed: -(2 * Math.PI) / 35, direction: -1 }, // CCW, 35s for full rotation
-  3: { radius: 170, radiusMd: 250, speed: (2 * Math.PI) / 45, direction: 1 }, // CW, 45s for full rotation
+  1: { 
+    radius: 65,      // mobile
+    radiusSm: 80,    // sm (640px+)
+    radiusMd: 100,   // md (768px+)
+    radiusLg: 130,   // lg (1024px+)
+    speed: (2 * Math.PI) / 25, 
+    direction: 1 
+  }, // CW, 25s for full rotation
+  2: { 
+    radius: 100, 
+    radiusSm: 125,
+    radiusMd: 150,
+    radiusLg: 190,
+    speed: -(2 * Math.PI) / 35, 
+    direction: -1 
+  }, // CCW, 35s for full rotation
+  3: { 
+    radius: 135, 
+    radiusSm: 170,
+    radiusMd: 210,
+    radiusLg: 250,
+    speed: (2 * Math.PI) / 45, 
+    direction: 1 
+  }, // CW, 45s for full rotation
 };
 
 export const Integrations: React.FC = () => {
@@ -77,27 +99,27 @@ export const Integrations: React.FC = () => {
   const activeLabel = INTEGRATIONS.find(i => i.id === activeId)?.label || 'Integrations';
 
   return (
-    <section className="py-32 relative overflow-hidden bg-[#0B0C15]">
+    <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden bg-[#0B0C15]">
       {/* Background Gradients */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] bg-brand-accent/5 rounded-full blur-[100px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
         
         {/* Header */}
-        <div className="mb-20">
-            <h2 className="text-4xl md:text-6xl font-semibold text-white mb-6 tracking-tight">
-            Works seamlessly with<br />
-            your <span className="font-serif italic font-normal text-white">favorite tools</span>
+        <div className="mb-12 sm:mb-16 md:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6 tracking-tight px-4">
+            Works seamlessly with<br className="hidden sm:block" />
+            <span className="sm:hidden"> </span>your <span className="font-serif italic font-normal text-white">favorite tools</span>
             </h2>
-            <p className="text-brand-text text-lg max-w-2xl mx-auto">
+            <p className="text-brand-text text-base sm:text-lg max-w-2xl mx-auto px-4">
                 Connect Rovoxa with the apps you use every day. Automate workflows and sync data instantly.
             </p>
         </div>
 
         {/* Orbit Visualization */}
-        <div className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] mx-auto flex items-center justify-center">
+        <div className="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[500px] md:h-[500px] lg:w-[600px] lg:h-[600px] mx-auto flex items-center justify-center">
            
            {/* Center Core */}
            <div className="absolute z-20 flex flex-col items-center justify-center transition-all duration-300">
@@ -106,26 +128,26 @@ export const Integrations: React.FC = () => {
                     <div className="absolute inset-0 bg-brand-accent rounded-full blur-[20px] opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
                     
                     {/* Main Orb */}
-                    <div className="relative w-20 h-20 md:w-24 md:h-24 bg-gradient-to-b from-[#D0F256] to-[#aacc00] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(208,242,86,0.3)] border-[4px] border-[#0B0C15]">
-                        <Hourglass className="w-8 h-8 md:w-10 md:h-10 text-[#0B0C15]" />
+                    <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-gradient-to-b from-[#D0F256] to-[#aacc00] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(208,242,86,0.3)] border-[3px] sm:border-[4px] border-[#0B0C15]">
+                        <Hourglass className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-[#0B0C15]" />
                     </div>
                 </div>
                 
                 {/* Dynamic Label */}
-                <div className={`mt-4 absolute top-full left-1/2 -translate-x-1/2 whitespace-nowrap px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-sm font-medium text-white transition-all duration-300 ${activeId ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
+                <div className={`mt-3 sm:mt-4 absolute top-full left-1/2 -translate-x-1/2 whitespace-nowrap px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs sm:text-sm font-medium text-white transition-all duration-300 ${activeId ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
                     {activeLabel}
                 </div>
            </div>
            
            {/* Static Ring Borders */}
            <div 
-             className="absolute border border-white/10 rounded-full w-[160px] h-[160px] md:w-[260px] md:h-[260px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+             className="absolute border border-white/10 rounded-full w-[130px] h-[130px] sm:w-[160px] sm:h-[160px] md:w-[200px] md:h-[200px] lg:w-[260px] lg:h-[260px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
            ></div>
            <div 
-             className="absolute border border-white/10 rounded-full w-[250px] h-[250px] md:w-[380px] md:h-[380px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+             className="absolute border border-white/10 rounded-full w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] md:w-[300px] md:h-[300px] lg:w-[380px] lg:h-[380px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
            ></div>
            <div 
-             className="absolute border border-white/10 rounded-full w-[340px] h-[340px] md:w-[500px] md:h-[500px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+             className="absolute border border-white/10 rounded-full w-[270px] h-[270px] sm:w-[340px] sm:h-[340px] md:w-[420px] md:h-[420px] lg:w-[500px] lg:h-[500px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
            ></div>
            
            {/* Orbiting Icons */}
@@ -133,16 +155,17 @@ export const Integrations: React.FC = () => {
              const config = RING_CONFIG[item.ring as keyof typeof RING_CONFIG];
              const angle = angles[item.id] || item.initialAngle;
              
-             // Calculate position using polar coordinates
-             const radius = config.radius;
-             const radiusMd = config.radiusMd;
-             
+             // Calculate position using polar coordinates for each breakpoint
              // Polar to Cartesian conversion: x = r * cos(θ), y = r * sin(θ)
              // Note: In screen coordinates, positive Y is down, so we negate Y
-             const x = radius * Math.cos(angle);
-             const y = -radius * Math.sin(angle); // Negate for screen coordinates
-             const xMd = radiusMd * Math.cos(angle);
-             const yMd = -radiusMd * Math.sin(angle);
+             const x = config.radius * Math.cos(angle);
+             const y = -config.radius * Math.sin(angle);
+             const xSm = config.radiusSm * Math.cos(angle);
+             const ySm = -config.radiusSm * Math.sin(angle);
+             const xMd = config.radiusMd * Math.cos(angle);
+             const yMd = -config.radiusMd * Math.sin(angle);
+             const xLg = config.radiusLg * Math.cos(angle);
+             const yLg = -config.radiusLg * Math.sin(angle);
              
              return (
                <OrbitingIcon
@@ -151,8 +174,12 @@ export const Integrations: React.FC = () => {
                  angle={angle}
                  x={x}
                  y={y}
+                 xSm={xSm}
+                 ySm={ySm}
                  xMd={xMd}
                  yMd={yMd}
+                 xLg={xLg}
+                 yLg={yLg}
                  isActive={activeId === item.id}
                  onClick={() => setActiveId(item.id)}
                />
@@ -171,8 +198,12 @@ interface OrbitingIconProps {
   angle: number;
   x: number;
   y: number;
+  xSm: number;
+  ySm: number;
   xMd: number;
   yMd: number;
+  xLg: number;
+  yLg: number;
   isActive: boolean;
   onClick: () => void;
 }
@@ -180,19 +211,45 @@ interface OrbitingIconProps {
 const OrbitingIcon: React.FC<OrbitingIconProps> = ({ 
   item, 
   x, 
-  y, 
+  y,
+  xSm,
+  ySm,
   xMd, 
-  yMd, 
+  yMd,
+  xLg,
+  yLg,
   isActive, 
   onClick 
 }) => {
   return (
     <>
-      {/* Mobile version */}
+      {/* Mobile version (default) */}
       <div 
-        className="absolute left-1/2 top-1/2 pointer-events-none md:hidden"
+        className="absolute left-1/2 top-1/2 pointer-events-none sm:hidden"
         style={{
           transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+        }}
+      >
+        <button
+          onClick={onClick}
+          className={`
+            group relative flex items-center justify-center w-9 h-9 rounded-full 
+            border transition-all duration-300 pointer-events-auto
+            ${isActive 
+              ? 'bg-brand-accent text-brand-dark border-brand-accent shadow-[0_0_20px_rgba(208,242,86,0.5)] scale-110 z-20' 
+              : 'bg-[#0F1119] text-gray-400 border-white/10 hover:border-brand-accent/50 hover:text-white z-10'
+            }
+          `}
+        >
+          <item.icon size={16} className="transition-transform duration-300 group-hover:scale-110" />
+        </button>
+      </div>
+      
+      {/* Small screens (sm) */}
+      <div 
+        className="absolute left-1/2 top-1/2 pointer-events-none hidden sm:block md:hidden"
+        style={{
+          transform: `translate(calc(-50% + ${xSm}px), calc(-50% + ${ySm}px))`,
         }}
       >
         <button
@@ -210,11 +267,33 @@ const OrbitingIcon: React.FC<OrbitingIconProps> = ({
         </button>
       </div>
       
-      {/* Desktop version */}
+      {/* Medium screens (md) */}
       <div 
-        className="absolute left-1/2 top-1/2 pointer-events-none hidden md:block"
+        className="absolute left-1/2 top-1/2 pointer-events-none hidden md:block lg:hidden"
         style={{
           transform: `translate(calc(-50% + ${xMd}px), calc(-50% + ${yMd}px))`,
+        }}
+      >
+        <button
+          onClick={onClick}
+          className={`
+            group relative flex items-center justify-center w-11 h-11 rounded-full 
+            border transition-all duration-300 pointer-events-auto
+            ${isActive 
+              ? 'bg-brand-accent text-brand-dark border-brand-accent shadow-[0_0_20px_rgba(208,242,86,0.5)] scale-110 z-20' 
+              : 'bg-[#0F1119] text-gray-400 border-white/10 hover:border-brand-accent/50 hover:text-white z-10'
+            }
+          `}
+        >
+          <item.icon size={19} className="transition-transform duration-300 group-hover:scale-110" />
+        </button>
+      </div>
+      
+      {/* Large screens (lg+) */}
+      <div 
+        className="absolute left-1/2 top-1/2 pointer-events-none hidden lg:block"
+        style={{
+          transform: `translate(calc(-50% + ${xLg}px), calc(-50% + ${yLg}px))`,
         }}
       >
         <button
