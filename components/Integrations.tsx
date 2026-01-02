@@ -1,67 +1,83 @@
-import React, { useState } from 'react';
-import { Slack, Mail, Trello, Figma, Github, Chrome, Calendar, MessageSquare, Database, Globe, Zap, Hourglass, Box, Layers, Link as LinkIcon } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Slack, MessageSquare, Box, Hourglass, Globe, Database, Zap, Figma, Calendar, Github } from 'lucide-react';
 
+// Two icons per ring (spaced 180 degrees apart)
 const INTEGRATIONS = [
-  // Inner Ring (Ring 1)
-  { id: 'notion', label: 'Notion', icon: Box, ring: 1, angle: 0 },
-  { id: 'globe', label: 'Webhooks', icon: Globe, ring: 1, angle: 180 },
+  // Ring 1 (Inner) - 2 icons
+  { id: 'notion', label: 'Notion', icon: Box, ring: 1, initialAngle: 0 },
+  { id: 'globe', label: 'Webhooks', icon: Globe, ring: 1, initialAngle: Math.PI },
   
-  // Middle Ring (Ring 2)
-  { id: 'slack', label: 'Slack', icon: Slack, ring: 2, angle: 45 },
-  { id: 'linear', label: 'Linear', icon: Zap, ring: 2, angle: 165 },
-  { id: 'drive', label: 'Drive', icon: Database, ring: 2, angle: 285 },
-
-  // Outer Ring (Ring 3)
-  { id: 'intercom', label: 'Intercom', icon: MessageSquare, ring: 3, angle: 90 },
-  { id: 'figma', label: 'Figma', icon: Figma, ring: 3, angle: 210 },
-  { id: 'calendar', label: 'Calendar', icon: Calendar, ring: 3, angle: 330 },
+  // Ring 2 (Middle) - 2 icons
+  { id: 'slack', label: 'Slack', icon: Slack, ring: 2, initialAngle: Math.PI / 4 },
+  { id: 'database', label: 'Database', icon: Database, ring: 2, initialAngle: Math.PI / 4 + Math.PI },
+  
+  // Ring 3 (Outer) - 2 icons
+  { id: 'intercom', label: 'Intercom', icon: MessageSquare, ring: 3, initialAngle: Math.PI / 2 },
+  { id: 'figma', label: 'Figma', icon: Figma, ring: 3, initialAngle: Math.PI / 2 + Math.PI },
 ];
+
+// Ring configurations
+// Speed calculated as: 2π / duration (in radians per second)
+const RING_CONFIG = {
+  1: { radius: 80, radiusMd: 130, speed: (2 * Math.PI) / 25, direction: 1 }, // CW, 25s for full rotation
+  2: { radius: 125, radiusMd: 190, speed: -(2 * Math.PI) / 35, direction: -1 }, // CCW, 35s for full rotation
+  3: { radius: 170, radiusMd: 250, speed: (2 * Math.PI) / 45, direction: 1 }, // CW, 45s for full rotation
+};
 
 export const Integrations: React.FC = () => {
   const [activeId, setActiveId] = useState<string | null>(null);
+  
+  // Initialize angles for each icon based on their initial angles
+  const [angles, setAngles] = useState<{ [key: string]: number }>(() => {
+    const initialAngles: { [key: string]: number } = {};
+    INTEGRATIONS.forEach(item => {
+      initialAngles[item.id] = item.initialAngle;
+    });
+    return initialAngles;
+  });
+  
+  const animationFrameRef = useRef<number>();
+  const lastTimeRef = useRef<number>(Date.now());
+
+  // Animation loop
+  useEffect(() => {
+    const animate = () => {
+      const now = Date.now();
+      const deltaTime = (now - lastTimeRef.current) / 1000; // Convert to seconds
+      lastTimeRef.current = now;
+
+      setAngles((prev) => {
+        const newAngles: { [key: string]: number } = {};
+        INTEGRATIONS.forEach((item) => {
+          const config = RING_CONFIG[item.ring as keyof typeof RING_CONFIG];
+          // Each icon on the same ring uses the same speed
+          // The initial angle offset is preserved relative to the ring's base angle
+          const baseAngle = prev[item.id] || item.initialAngle;
+          let newAngle = baseAngle + config.speed * deltaTime;
+          // Wrap angle using modulo 2π to keep it in [0, 2π) range
+          newAngle = ((newAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+          newAngles[item.id] = newAngle;
+        });
+        return newAngles;
+      });
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
 
   // Helper to find active integration label
   const activeLabel = INTEGRATIONS.find(i => i.id === activeId)?.label || 'Integrations';
 
   return (
     <section className="py-32 relative overflow-hidden bg-[#0B0C15]">
-      {/* CSS for animations */}
-      <style>{`
-        @keyframes orbit-cw {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        @keyframes orbit-ccw {
-          from { transform: rotate(360deg); }
-          to { transform: rotate(0deg); }
-        }
-        .animate-orbit-cw {
-          animation: orbit-cw var(--duration, 20s) linear infinite;
-        }
-        .animate-orbit-ccw {
-          animation: orbit-ccw var(--duration, 20s) linear infinite;
-        }
-        /* Pause animations on hover */
-        .animate-orbit-cw:hover, .animate-orbit-ccw:hover {
-          animation-play-state: paused;
-        }
-        
-        /* Counter rotate icons to keep them upright */
-        /* The wrapper rotates opposite to the ring to cancel out orbital rotation */
-        .icon-wrapper {
-          animation: orbit-ccw var(--duration, 20s) linear infinite;
-        }
-        /* If the ring rotates CCW, the icon must rotate CW to compensate */
-        .ring-ccw .icon-wrapper {
-          animation: orbit-cw var(--duration, 20s) linear infinite;
-        }
-        
-        /* When hovering the ring, pause the icon counter-rotation too so it doesn't spin in place */
-        .icon-wrapper-parent:hover .icon-wrapper {
-          animation-play-state: paused;
-        }
-      `}</style>
-
       {/* Background Gradients */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[100px]" />
@@ -81,7 +97,7 @@ export const Integrations: React.FC = () => {
         </div>
 
         {/* Orbit Visualization */}
-        <div className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] mx-auto flex items-center justify-center perspective-1000">
+        <div className="relative w-[340px] h-[340px] md:w-[600px] md:h-[600px] mx-auto flex items-center justify-center">
            
            {/* Center Core */}
            <div className="absolute z-20 flex flex-col items-center justify-center transition-all duration-300">
@@ -101,35 +117,47 @@ export const Integrations: React.FC = () => {
                 </div>
            </div>
            
-           {/* Ring 1 (Inner) - CW */}
+           {/* Static Ring Borders */}
            <div 
-             className="absolute border border-white/10 rounded-full w-[160px] h-[160px] md:w-[260px] md:h-[260px] animate-orbit-cw icon-wrapper-parent"
-             style={{ '--duration': '25s' } as React.CSSProperties}
-           >
-              {INTEGRATIONS.filter(i => i.ring === 1).map((item) => (
-                  <IntegrationItem key={item.id} item={item} isActive={activeId === item.id} onClick={() => setActiveId(item.id)} />
-              ))}
-           </div>
+             className="absolute border border-white/10 rounded-full w-[160px] h-[160px] md:w-[260px] md:h-[260px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+           ></div>
+           <div 
+             className="absolute border border-white/10 rounded-full w-[250px] h-[250px] md:w-[380px] md:h-[380px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+           ></div>
+           <div 
+             className="absolute border border-white/10 rounded-full w-[340px] h-[340px] md:w-[500px] md:h-[500px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+           ></div>
            
-           {/* Ring 2 (Middle) - CCW */}
-           <div 
-             className="absolute border border-white/10 rounded-full w-[250px] h-[250px] md:w-[380px] md:h-[380px] animate-orbit-ccw ring-ccw icon-wrapper-parent"
-             style={{ '--duration': '35s' } as React.CSSProperties}
-           >
-               {INTEGRATIONS.filter(i => i.ring === 2).map((item) => (
-                  <IntegrationItem key={item.id} item={item} isActive={activeId === item.id} onClick={() => setActiveId(item.id)} />
-              ))}
-           </div>
-           
-           {/* Ring 3 (Outer) - CW */}
-           <div 
-             className="absolute border border-white/10 rounded-full w-[340px] h-[340px] md:w-[500px] md:h-[500px] animate-orbit-cw icon-wrapper-parent"
-             style={{ '--duration': '45s' } as React.CSSProperties}
-           >
-               {INTEGRATIONS.filter(i => i.ring === 3).map((item) => (
-                  <IntegrationItem key={item.id} item={item} isActive={activeId === item.id} onClick={() => setActiveId(item.id)} />
-              ))}
-           </div>
+           {/* Orbiting Icons */}
+           {INTEGRATIONS.map((item) => {
+             const config = RING_CONFIG[item.ring as keyof typeof RING_CONFIG];
+             const angle = angles[item.id] || item.initialAngle;
+             
+             // Calculate position using polar coordinates
+             const radius = config.radius;
+             const radiusMd = config.radiusMd;
+             
+             // Polar to Cartesian conversion: x = r * cos(θ), y = r * sin(θ)
+             // Note: In screen coordinates, positive Y is down, so we negate Y
+             const x = radius * Math.cos(angle);
+             const y = -radius * Math.sin(angle); // Negate for screen coordinates
+             const xMd = radiusMd * Math.cos(angle);
+             const yMd = -radiusMd * Math.sin(angle);
+             
+             return (
+               <OrbitingIcon
+                 key={item.id}
+                 item={item}
+                 angle={angle}
+                 x={x}
+                 y={y}
+                 xMd={xMd}
+                 yMd={yMd}
+                 isActive={activeId === item.id}
+                 onClick={() => setActiveId(item.id)}
+               />
+             );
+           })}
 
         </div>
 
@@ -138,40 +166,71 @@ export const Integrations: React.FC = () => {
   );
 };
 
-const IntegrationItem: React.FC<{ 
-    item: typeof INTEGRATIONS[0], 
-    isActive: boolean,
-    onClick: () => void 
-}> = ({ item, isActive, onClick }) => {
-    return (
-        <div 
-            className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none"
-            style={{ transform: `rotate(${item.angle}deg)` }}
+interface OrbitingIconProps {
+  item: typeof INTEGRATIONS[0];
+  angle: number;
+  x: number;
+  y: number;
+  xMd: number;
+  yMd: number;
+  isActive: boolean;
+  onClick: () => void;
+}
+
+const OrbitingIcon: React.FC<OrbitingIconProps> = ({ 
+  item, 
+  x, 
+  y, 
+  xMd, 
+  yMd, 
+  isActive, 
+  onClick 
+}) => {
+  return (
+    <>
+      {/* Mobile version */}
+      <div 
+        className="absolute left-1/2 top-1/2 pointer-events-none md:hidden"
+        style={{
+          transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
+        }}
+      >
+        <button
+          onClick={onClick}
+          className={`
+            group relative flex items-center justify-center w-10 h-10 rounded-full 
+            border transition-all duration-300 pointer-events-auto
+            ${isActive 
+              ? 'bg-brand-accent text-brand-dark border-brand-accent shadow-[0_0_20px_rgba(208,242,86,0.5)] scale-110 z-20' 
+              : 'bg-[#0F1119] text-gray-400 border-white/10 hover:border-brand-accent/50 hover:text-white z-10'
+            }
+          `}
         >
-            {/* 
-               1. Position: center of top edge. 
-               2. icon-wrapper handles the continuous counter-rotation.
-               3. inner div handles the static rotation correction (-item.angle) so the icon starts upright.
-            */}
-            <div 
-                className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 icon-wrapper pointer-events-auto"
-            >
-                 <div style={{ transform: `rotate(-${item.angle}deg)` }}>
-                     <button
-                        onClick={onClick}
-                        className={`
-                            group relative flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full 
-                            border transition-all duration-300
-                            ${isActive 
-                                ? 'bg-brand-accent text-brand-dark border-brand-accent shadow-[0_0_20px_rgba(208,242,86,0.5)] scale-110 z-20' 
-                                : 'bg-[#0F1119] text-gray-400 border-white/10 hover:border-brand-accent/50 hover:text-white z-10'
-                            }
-                        `}
-                     >
-                        <item.icon size={18} className="md:w-5 md:h-5 transition-transform duration-300 group-hover:scale-110" />
-                     </button>
-                 </div>
-            </div>
-        </div>
-    );
+          <item.icon size={18} className="transition-transform duration-300 group-hover:scale-110" />
+        </button>
+      </div>
+      
+      {/* Desktop version */}
+      <div 
+        className="absolute left-1/2 top-1/2 pointer-events-none hidden md:block"
+        style={{
+          transform: `translate(calc(-50% + ${xMd}px), calc(-50% + ${yMd}px))`,
+        }}
+      >
+        <button
+          onClick={onClick}
+          className={`
+            group relative flex items-center justify-center w-12 h-12 rounded-full 
+            border transition-all duration-300 pointer-events-auto
+            ${isActive 
+              ? 'bg-brand-accent text-brand-dark border-brand-accent shadow-[0_0_20px_rgba(208,242,86,0.5)] scale-110 z-20' 
+              : 'bg-[#0F1119] text-gray-400 border-white/10 hover:border-brand-accent/50 hover:text-white z-10'
+            }
+          `}
+        >
+          <item.icon size={20} className="transition-transform duration-300 group-hover:scale-110" />
+        </button>
+      </div>
+    </>
+  );
 };

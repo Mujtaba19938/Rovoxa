@@ -50,8 +50,9 @@ export const Pricing: React.FC = () => {
                         <p className="text-sm text-brand-text/80 leading-relaxed max-w-[260px]">{plan.description}</p>
                     </div>
                     {plan.highlight && (
-                        <div className="bg-brand-accent text-[#0B0C15] text-[10px] font-bold uppercase px-3 py-1 rounded-full tracking-wide shadow-[0_0_10px_rgba(208,242,86,0.4)]">
-                        Most popular
+                        <div className="bg-brand-accent text-[#0B0C15] text-[10px] font-bold uppercase px-3 py-1.5 rounded-full tracking-wide shadow-[0_0_10px_rgba(208,242,86,0.4)] leading-tight flex flex-col items-center">
+                          <span>MOST</span>
+                          <span>POPULAR</span>
                         </div>
                     )}
                   </div>
