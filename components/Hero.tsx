@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from './ui/Button';
-import { TRUSTED_BRANDS } from '../constants';
+import { TRUSTED_BRANDS, CHATBOT_URL } from '../constants';
 import { PlayCircle, Calendar, MessageCircle, Mic, Send, User, Bot } from 'lucide-react';
 
 export const Hero: React.FC = () => {
@@ -47,7 +47,9 @@ export const Hero: React.FC = () => {
           Meet Rovoxa, your intelligent AI chatbot that engages, converts, and supports users 24/7. Built for SaaS, made for humans.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 md:mb-20 px-4">
-          <Button variant="primary" size="md" className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3">Start Free Trial</Button>
+          <a href="https://ai-rovoxa-chatbot.vercel.app/" className="w-full sm:w-auto">
+            <Button variant="primary" size="md" className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3">Start Free Trial</Button>
+          </a>
           <Button variant="outline" size="md" className="group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3">
              <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-brand-text group-hover:text-white transition-colors flex-shrink-0" />
              Watch Demo
