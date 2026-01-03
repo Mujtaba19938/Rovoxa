@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Bot, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 
 export const Navbar: React.FC = () => {
@@ -12,13 +12,14 @@ export const Navbar: React.FC = () => {
           <div className="flex justify-between items-center">
             
             {/* Logo */}
-            <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-              {/* Logo Icon matching the greenish yellow theme */}
-              <div className="text-[#D0F256]">
-                <Bot size={24} strokeWidth={1.5} />
-              </div>
+            <a href="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+              <img 
+                src="/logo.png" 
+                alt="Rovoxa" 
+                className="h-8 w-auto"
+              />
               <span className="text-lg font-medium tracking-tight text-white">Rovoxa</span>
-            </div>
+            </a>
 
             {/* Desktop Links */}
             <div className="hidden md:flex items-center justify-center space-x-8">
