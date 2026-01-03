@@ -1,5 +1,9 @@
 import { Bot, Link as LinkIcon, BarChart3, Zap, Shield, Globe, MessageSquare, Layout, Cpu } from 'lucide-react';
 
+// Chatbot URL - Update this to point to your chatbot deployment
+// Use relative path to keep on same domain/port, or absolute URL if needed
+export const CHATBOT_URL = 'https://ai-rovoxa-chatbot-ieak3ptg5-mujtabas-projects-9c87e9c0.vercel.app/';
+
 export const NAV_LINKS = [
   { label: 'Home', href: '#' },
   { label: 'Features', href: '#features' },
