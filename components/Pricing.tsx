@@ -4,25 +4,25 @@ import { Check } from 'lucide-react';
 
 export const Pricing: React.FC = () => {
   return (
-    <section id="pricing" className="py-32 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-20">
+    <section id="pricing" className="pt-8 pb-8 md:py-32 relative">
+      <div className="max-w-7xl mx-auto px-5 md:px-6 lg:px-8">
+        <div className="text-center mb-8 md:mb-20">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-brand-text mb-6">
             <div className="w-2 h-2 rounded-full bg-brand-text"></div>
             Our pricing
           </div>
-          <h2 className="text-4xl md:text-5xl font-semibold text-white">
+          <h2 className="text-2xl md:text-5xl font-semibold text-white">
             Simple pricing for<br />
             <span className="font-serif italic text-brand-text">any size team</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
           {PRICING_PLANS.map((plan, index) => (
             <div 
               key={index} 
               className={`
-                group relative p-8 md:p-10 rounded-3xl border transition-all duration-500 overflow-hidden
+                group relative p-6 md:p-10 rounded-2xl md:rounded-3xl border transition-all duration-500 overflow-hidden
                 ${plan.highlight 
                   ? 'bg-[#0d0f16] border-white/10 hover:border-brand-accent/20' 
                   : 'bg-[#0B0C15] border-white/5 hover:border-white/10'

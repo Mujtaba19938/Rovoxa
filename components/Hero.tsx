@@ -5,7 +5,7 @@ import { PlayCircle, Calendar, MessageCircle, Mic, Send, User, Bot } from 'lucid
 
 export const Hero: React.FC = () => {
   return (
-    <section className="relative pt-20 pb-12 sm:pt-28 sm:pb-16 md:pt-40 md:pb-20 lg:pt-48 overflow-hidden min-h-[85vh] sm:min-h-screen flex flex-col justify-center">
+    <section className="relative overflow-hidden">
       
       <style>{`
         @keyframes marquee {
@@ -20,13 +20,13 @@ export const Hero: React.FC = () => {
         }
       `}</style>
 
-      {/* Background Atmosphere */}
-      <div className="absolute inset-0 w-full h-full pointer-events-none">
+      {/* Background Atmosphere - Hidden on mobile */}
+      <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none">
           {/* Main Right Glow - Greenish Yellow */}
-          <div className="absolute -top-[30%] -right-[10%] w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] md:w-[800px] md:h-[800px] lg:w-[900px] lg:h-[900px] bg-[radial-gradient(circle,rgba(208,242,86,0.15)_0%,rgba(0,0,0,0)_70%)] blur-[60px] sm:blur-[80px] md:blur-[120px] mix-blend-screen opacity-100"></div>
+          <div className="absolute -top-[30%] -right-[10%] w-[800px] h-[800px] lg:w-[900px] lg:h-[900px] bg-[radial-gradient(circle,rgba(208,242,86,0.15)_0%,rgba(0,0,0,0)_70%)] blur-[120px] mix-blend-screen opacity-100"></div>
           
           {/* Secondary Left Glow - Deep Space Purple */}
-          <div className="absolute top-[-10%] left-[-20%] w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] md:w-[800px] md:h-[800px] bg-purple-900/10 rounded-full blur-[80px] sm:blur-[100px] md:blur-[120px] opacity-60"></div>
+          <div className="absolute top-[-10%] left-[-20%] w-[800px] h-[800px] bg-purple-900/10 rounded-full blur-[120px] opacity-60"></div>
           
           {/* Stars / Particles */}
           <div className="absolute top-[15%] left-[20%] w-0.5 h-0.5 bg-white rounded-full opacity-60"></div>
@@ -36,28 +36,34 @@ export const Hero: React.FC = () => {
           <div className="absolute top-[50%] right-[5%] w-0.5 h-0.5 bg-white rounded-full opacity-20"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      {/* Mobile-First Hero Content */}
+      <div className="flex flex-col gap-4 px-5 pt-12 md:max-w-7xl md:mx-auto md:px-6 md:pt-20 md:pb-12 lg:px-8 md:text-center md:relative md:z-10">
         
-        {/* Text Content */}
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-white mb-4 sm:mb-6 px-4">
-          Talk smarter.<br className="hidden sm:block" />
-          <span className="sm:hidden"> </span>Scale <span className="font-serif italic font-normal text-brand-accent">faster.</span>
+        {/* Text Content - Mobile Optimized */}
+        <h1 className="text-2xl font-semibold text-white md:text-5xl md:mb-4 lg:text-6xl lg:text-7xl md:tracking-tight">
+          Talk smarter.<br />Scale <span className="font-serif italic font-normal text-brand-accent">faster.</span>
         </h1>
-        <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-brand-text mb-8 sm:mb-10 leading-relaxed px-4">
-          Meet Rovoxa, your intelligent AI chatbot that engages, converts, and supports users 24/7. Built for SaaS, made for humans.
+        <p className="text-sm text-brand-text md:text-lg md:max-w-2xl md:mx-auto md:mb-8 lg:text-xl md:leading-relaxed">
+          Your intelligent AI chatbot that engages, converts, and supports users 24/7.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-12 sm:mb-16 md:mb-20 px-4">
-          <a href="https://ai-rovoxa-chatbot.vercel.app/" className="w-full sm:w-auto">
-            <Button variant="primary" size="md" className="w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3">Start Free Trial</Button>
-          </a>
-          <Button variant="outline" size="md" className="group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3">
+        
+        {/* CTA - Above the fold on mobile */}
+        <a href="https://ai-rovoxa-chatbot.vercel.app/" className="w-full md:w-auto md:mx-auto">
+          <Button variant="primary" size="md" className="w-full rounded-xl py-3 font-medium md:rounded-full md:px-6 md:py-2.5">
+            Start Free Trial
+          </Button>
+        </a>
+        
+        {/* Secondary CTA - Hidden on mobile to save space */}
+        <div className="hidden md:flex items-center justify-center gap-4">
+          <Button variant="outline" size="md" className="group text-sm sm:text-base px-6 sm:px-8 py-2.5 sm:py-3">
              <PlayCircle className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-brand-text group-hover:text-white transition-colors flex-shrink-0" />
              Watch Demo
           </Button>
         </div>
 
-        {/* Floating UI Mockup */}
-        <div className="relative w-full max-w-4xl mx-auto perspective-1000 px-4 sm:px-6">
+        {/* Floating UI Mockup - Hidden on mobile */}
+        <div className="hidden md:block relative w-full max-w-4xl mx-auto perspective-1000 px-4 sm:px-6 mt-12 md:mt-16 lg:mt-20">
           <div className="relative bg-[#13151b] border border-white/10 rounded-2xl sm:rounded-3xl shadow-2xl p-3 sm:p-4 md:p-6 lg:p-8 backdrop-blur-xl ring-1 ring-white/5">
              {/* Header of Mockup */}
              <div className="flex items-center justify-between mb-6 sm:mb-8">
@@ -168,8 +174,8 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Trusted By */}
-        <div className="mt-16 sm:mt-20 md:mt-24 w-full max-w-5xl mx-auto px-4">
+        {/* Trusted By - Hidden on mobile */}
+        <div className="hidden md:block mt-16 sm:mt-20 md:mt-24 w-full max-w-5xl mx-auto px-4">
             <p className="text-[10px] sm:text-xs font-semibold tracking-widest text-brand-text uppercase mb-6 sm:mb-8 md:mb-10 opacity-80">Trusted by innovative teams</p>
             
             <div className="relative w-full overflow-hidden">

@@ -10,7 +10,7 @@ const INTEGRATIONS = [
   // Ring 2 (Middle) - 2 icons
   { id: 'slack', label: 'Slack', icon: Slack, ring: 2, initialAngle: Math.PI / 4 },
   { id: 'database', label: 'Database', icon: Database, ring: 2, initialAngle: Math.PI / 4 + Math.PI },
-  
+
   // Ring 3 (Outer) - 2 icons
   { id: 'intercom', label: 'Intercom', icon: MessageSquare, ring: 3, initialAngle: Math.PI / 2 },
   { id: 'figma', label: 'Figma', icon: Figma, ring: 3, initialAngle: Math.PI / 2 + Math.PI },
@@ -99,21 +99,20 @@ export const Integrations: React.FC = () => {
   const activeLabel = INTEGRATIONS.find(i => i.id === activeId)?.label || 'Integrations';
 
   return (
-    <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden bg-[#0B0C15]">
-      {/* Background Gradients */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] bg-brand-accent/5 rounded-full blur-[100px]" />
+    <section className="pt-8 pb-8 md:py-32 relative overflow-hidden bg-[#0B0C15]">
+      {/* Background Gradients - Hidden on mobile */}
+      <div className="hidden md:block absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-accent/5 rounded-full blur-[100px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-5 md:px-6 lg:px-8 text-center relative z-10">
         
         {/* Header */}
-        <div className="mb-12 sm:mb-16 md:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6 tracking-tight px-4">
-            Works seamlessly with<br className="hidden sm:block" />
-            <span className="sm:hidden"> </span>your <span className="font-serif italic font-normal text-white">favorite tools</span>
+        <div className="mb-8 md:mb-20">
+            <h2 className="text-2xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 md:mb-6 tracking-tight">
+            Works seamlessly with<br />your <span className="font-serif italic font-normal text-white">favorite tools</span>
             </h2>
-            <p className="text-brand-text text-base sm:text-lg max-w-2xl mx-auto px-4">
+            <p className="text-sm md:text-lg text-brand-text max-w-2xl mx-auto">
                 Connect Rovoxa with the apps you use every day. Automate workflows and sync data instantly.
             </p>
         </div>
@@ -221,15 +220,15 @@ const OrbitingIcon: React.FC<OrbitingIconProps> = ({
   isActive, 
   onClick 
 }) => {
-  return (
+    return (
     <>
       {/* Mobile version (default) */}
-      <div 
+        <div 
         className="absolute left-1/2 top-1/2 pointer-events-none sm:hidden"
         style={{
           transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`,
         }}
-      >
+        >
         <button
           onClick={onClick}
           className={`
@@ -246,26 +245,26 @@ const OrbitingIcon: React.FC<OrbitingIconProps> = ({
       </div>
       
       {/* Small screens (sm) */}
-      <div 
+            <div 
         className="absolute left-1/2 top-1/2 pointer-events-none hidden sm:block md:hidden"
         style={{
           transform: `translate(calc(-50% + ${xSm}px), calc(-50% + ${ySm}px))`,
         }}
       >
-        <button
-          onClick={onClick}
-          className={`
+                     <button
+                        onClick={onClick}
+                        className={`
             group relative flex items-center justify-center w-10 h-10 rounded-full 
             border transition-all duration-300 pointer-events-auto
-            ${isActive 
-              ? 'bg-brand-accent text-brand-dark border-brand-accent shadow-[0_0_20px_rgba(208,242,86,0.5)] scale-110 z-20' 
-              : 'bg-[#0F1119] text-gray-400 border-white/10 hover:border-brand-accent/50 hover:text-white z-10'
-            }
-          `}
-        >
+                            ${isActive 
+                                ? 'bg-brand-accent text-brand-dark border-brand-accent shadow-[0_0_20px_rgba(208,242,86,0.5)] scale-110 z-20' 
+                                : 'bg-[#0F1119] text-gray-400 border-white/10 hover:border-brand-accent/50 hover:text-white z-10'
+                            }
+                        `}
+                     >
           <item.icon size={18} className="transition-transform duration-300 group-hover:scale-110" />
-        </button>
-      </div>
+                     </button>
+                 </div>
       
       {/* Medium screens (md) */}
       <div 
@@ -287,7 +286,7 @@ const OrbitingIcon: React.FC<OrbitingIconProps> = ({
         >
           <item.icon size={19} className="transition-transform duration-300 group-hover:scale-110" />
         </button>
-      </div>
+            </div>
       
       {/* Large screens (lg+) */}
       <div 
@@ -309,7 +308,7 @@ const OrbitingIcon: React.FC<OrbitingIconProps> = ({
         >
           <item.icon size={20} className="transition-transform duration-300 group-hover:scale-110" />
         </button>
-      </div>
+        </div>
     </>
-  );
+    );
 };

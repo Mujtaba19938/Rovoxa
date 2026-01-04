@@ -4,23 +4,23 @@ import { Send, User, MessageSquare } from 'lucide-react';
 
 export const ContactForm: React.FC = () => {
   return (
-    <section className="py-24 relative">
-       {/* Background gradient for this section */}
-       <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-brand-accent/5 to-transparent pointer-events-none" />
+    <section className="pt-8 pb-8 md:py-24 relative">
+       {/* Background gradient for this section - Hidden on mobile */}
+       <div className="hidden md:block absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-brand-accent/5 to-transparent pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#13151b] border border-white/10 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-5 md:px-6 lg:px-8">
+        <div className="bg-[#13151b] border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-12 relative overflow-hidden">
            
            {/* Decorative elements */}
            <div className="absolute -top-24 -right-24 w-64 h-64 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none" />
            
-           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 items-center">
               <div>
-                 <h2 className="text-3xl font-semibold text-white mb-4">
+                 <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
                     Start chatting<br />
                     smarter <span className="font-serif italic text-brand-accent">today</span>
                  </h2>
-                 <p className="text-brand-text mb-8">
+                 <p className="text-sm md:text-base text-brand-text mb-6 md:mb-8">
                     Sign up in minutes and see how Rovoxa transforms your customer engagement.
                  </p>
                  

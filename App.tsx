@@ -10,9 +10,9 @@ import { Footer } from './components/Footer';
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-brand-dark text-white font-sans selection:bg-brand-accent selection:text-brand-dark">
+    <div className="min-h-[100dvh] w-full flex flex-col bg-brand-dark text-white font-sans selection:bg-brand-accent selection:text-brand-dark">
       <Navbar />
-      <main>
+      <main className="flex-1">
         <Hero />
         <Features />
         <Pricing />

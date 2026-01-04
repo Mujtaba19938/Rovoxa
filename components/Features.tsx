@@ -4,27 +4,27 @@ import { Sparkles } from 'lucide-react';
 
 export const Features: React.FC = () => {
   return (
-    <section id="features" className="py-24 relative">
-       {/* Ambient Light */}
-       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand-accent/5 rounded-full blur-[100px] -z-10" />
+    <section id="features" className="pt-8 pb-8 md:py-24 relative">
+       {/* Ambient Light - Hidden on mobile */}
+       <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand-accent/5 rounded-full blur-[100px] -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+      <div className="max-w-7xl mx-auto px-5 md:px-6 lg:px-8">
+        <div className="text-center mb-8 md:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-brand-text mb-6">
             <div className="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></div>
             How it works
           </div>
-          <h2 className="text-3xl md:text-5xl font-semibold text-white mb-4">
+          <h2 className="text-2xl md:text-5xl font-semibold text-white mb-4">
             Built to talk.<br />
             Trained to <span className="font-serif italic text-brand-text">understand.</span>
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {FEATURES.map((feature, index) => (
             <div 
               key={index} 
-              className="group relative p-8 rounded-3xl bg-[#0F1119] border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+              className="group relative p-6 md:p-8 rounded-2xl md:rounded-3xl bg-[#0F1119] border border-white/5 hover:border-white/10 transition-all duration-300 md:hover:-translate-y-1 overflow-hidden"
             >
               {/* Gradient hover effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-brand-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

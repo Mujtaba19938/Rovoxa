@@ -4,8 +4,8 @@ import { NAV_LINKS } from '../constants';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-[#05060A] border-t border-white/5 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#05060A] border-t border-white/5 py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-5 md:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
             <div className="flex items-center gap-2 mb-4 md:mb-0">
                 <div className="w-8 h-8 rounded-lg bg-brand-accent flex items-center justify-center text-brand-dark">

@@ -7,18 +7,18 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full bg-[#12141C]/80 backdrop-blur-lg border border-white/10 shadow-2xl transition-all duration-300">
-        <div className="px-4 py-3 md:px-6 md:py-2.5">
+      <nav className="fixed top-2 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full bg-[#12141C]/80 backdrop-blur-lg border border-white/10 shadow-2xl transition-all duration-300 md:top-6">
+        <div className="px-3 py-2 md:px-6 md:py-2.5">
           <div className="flex justify-between items-center">
             
             {/* Logo */}
-            <a href="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+            <a href="/" className="flex-shrink-0 flex items-center gap-1.5 md:gap-2 cursor-pointer">
               <img 
                 src="/logo.png" 
                 alt="Rovoxa" 
-                className="h-8 w-auto"
+                className="h-6 w-auto md:h-8"
               />
-              <span className="text-lg font-medium tracking-tight text-white">Rovoxa</span>
+              <span className="text-base md:text-lg font-medium tracking-tight text-white">Rovoxa</span>
             </a>
 
             {/* Desktop Links */}
